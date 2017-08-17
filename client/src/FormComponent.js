@@ -59,7 +59,7 @@ class FormComponent extends Component {
     render() {
         return (
             <form>
-                <Col md={4} sm={6} lg={4} lgOffset={2}>
+                <Col md={4} sm={6} lg={4} mdOffset={2} lgOffset={2}>
                     <FieldGroup
                         id="nameText"
                         type="text"
