@@ -19,6 +19,7 @@ class FormComponent extends Component {
         this.onEmailTextChange = this.onEmailTextChange.bind(this);
         this.onJobDateChange = this.onJobDateChange.bind(this);
         this.onJobDescriptionChange = this.onJobDescriptionChange.bind(this);
+        this.onSubmitButtonPress = this.onSubmitButtonPress.bind(this);
     }
 
     onNameTextChange(e) {
@@ -56,9 +57,39 @@ class FormComponent extends Component {
             jobDescription: e.target.value
         });
     }
+
+    onSubmitButtonPress(e) {
+        e.preventDefault();
+
+        fetch('/api/jobs', {
+            method: "put",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nameText: this.state.nameText,
+                cellPhoneNumber: this.state.cellPhoneNumber,
+                technicianSelect: this.state.technicianSelect,
+                emailText: this.state.emailText,
+                jobDate: this.state.jobDate,
+                jobDescription: this.state.jobDescription
+            })
+        })
+        .then(resp => {
+            if(resp.ok && resp.status === 200) {
+                console.log("Form pushed to database!")
+            } else {
+                throw new Error(resp.status);
+            }
+        })
+        .catch(ex => {
+            console.log("Something went wrong with the submission: " + ex);
+        });
+    }
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.onSubmitButtonPress}>
                 <Col md={4} sm={6} lg={4} mdOffset={2} lgOffset={2}>
                     <FieldGroup
                         id="nameText"
