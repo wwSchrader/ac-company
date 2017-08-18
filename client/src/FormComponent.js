@@ -20,6 +20,11 @@ class FormComponent extends Component {
         this.onJobDateChange = this.onJobDateChange.bind(this);
         this.onJobDescriptionChange = this.onJobDescriptionChange.bind(this);
         this.onSubmitButtonPress = this.onSubmitButtonPress.bind(this);
+        this.onRefreshJobsList = this.onRefreshJobsList.bind(this);
+    }
+
+    onRefreshJobsList(){
+        this.props.refreshJobsList();
     }
 
     onNameTextChange(e) {
@@ -77,7 +82,7 @@ class FormComponent extends Component {
         })
         .then(resp => {
             if(resp.ok && resp.status === 200) {
-                console.log("Form pushed to database!")
+                this.onRefreshJobsList();
             } else {
                 throw new Error(resp.status);
             }

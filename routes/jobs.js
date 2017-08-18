@@ -14,4 +14,15 @@ router.put('/', function(req, res, next) {
     });
 });
 
+/* GET all jobs*/
+router.get('/', function(req, res, next) {
+    Job.find(function(err, jobs) {
+        if(err) {
+            res.josn({'ERROR': err});
+        } else {
+            res.json(jobs);
+        }
+    });
+});
+
 module.exports = router;
